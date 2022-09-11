@@ -56,7 +56,7 @@ class VAE(nn.Module):
         else:
             optimizer = optim.Adam(self.parameters(), lr = lr)
 
-        for epoch in range(len(epochs)):
+        for epoch in range(epochs):
             print("For epoch {}".format(epoch+1))
 
             self.train(True)
@@ -68,7 +68,7 @@ class VAE(nn.Module):
 
                 optimizer.zero_grad()
                 outputs = self.forward(inputs)
-                loss = self.loss_fn(outputs, labels)
+                loss = self.loss_fn(outputs, inputs)
                 loss.backward()
                 optimizer.step()
 
@@ -76,7 +76,7 @@ class VAE(nn.Module):
                 train_loss += curr_loss
                 count += 1
 
-                print("\t\tLoss for Batch {} = {}".format(i + 1, curr_loss))
+                print("\t\tFor Epoch {}, Loss for Batch {} = {}".format(epoch + 1, i + 1, curr_loss))
 
             avg_train_loss = train_loss/count
 
@@ -87,7 +87,7 @@ class VAE(nn.Module):
             for i, data in enumerate(validation_loader):
                 inputs, labels = data
                 outputs = self.forward(inputs)
-                loss = self.loss_fn(outputs, labels)
+                loss = self.loss_fn(outputs, inputs)
                 valid_loss += loss.item()
                 count += 1
             
