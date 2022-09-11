@@ -5,7 +5,7 @@ import numpy as np
 from torch import nn
 from torch import optim
 
-from Optimizers.config import *
+from ..Optimizers.config import *
 
 class VAE(nn.Module):
     def __init__(self) -> None:
@@ -23,18 +23,19 @@ class VAE(nn.Module):
         return x_recon
 
     def encoder(self, x):
-        # This Function needed to be overloaded with encoder network
+        # This Function needed to be overridden with encoder network
         pass
 
     def repametrize(self, params):
-        # This Function needed to be overloaded with the reparametrize trick
+        # This Function needed to be overridden with the reparametrize trick
         pass
 
     def decoder(self, z):
-        # This Function needed to be overloaded with decoder network
+        # This Function needed to be overridden with decoder network
         pass
 
     def loss_fn(self, x, y):
+        # This Function needed to be overridden with the appropriate loss
         pass
 
     def fit(self, train_loader, validation_loader, epochs = 10, optimizer = ADAM, lr = 0.0001, optim_args = dict(), verbose = 1):
@@ -55,7 +56,7 @@ class VAE(nn.Module):
         else:
             optimizer = optim.Adam(self.parameters(), lr = lr)
 
-        for epoch in epochs:
+        for epoch in range(len(epochs)):
             print("For epoch {}".format(epoch+1))
 
             self.train(True)
