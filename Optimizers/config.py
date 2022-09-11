@@ -1,0 +1,3 @@
+SGD = 0
+ADA_GRAD = 1
+ADAM = 2
