@@ -33,7 +33,6 @@ class BaseModel(nn.Module):
         self.train_loss_v_epoch = np.zeros((2, epochs))
         self.valid_loss_v_epoch = np.zeros((2, epochs))
 
-
         if optimizer == SGD:
             pass
         elif optimizer == ADA_GRAD:
@@ -97,7 +96,7 @@ class BaseModel(nn.Module):
                 print("\tTrain Loss = {}".format(avg_train_loss))
 
             self.train_loss_v_epoch[0][epoch] = epoch
-            self.train_loss_v_epoch[0][epoch] = avg_valid_loss
+            self.train_loss_v_epoch[0][epoch] = avg_train_loss
 
     def predict(self, x):
         with torch.no_grad:

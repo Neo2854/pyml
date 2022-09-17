@@ -5,7 +5,7 @@ from ..Base.BaseModel import BaseModel
 from ..utils.learning_types import SELF_SUPERVISED
 from ..Optimizers.config import *
 
-class AutoEncoder(nn.Module):
+class AutoEncoder(BaseModel):
     def __init__(self) -> None:
         super(AutoEncoder, self).__init__()
 
@@ -37,7 +37,7 @@ class AutoEncoder(nn.Module):
             #   Example: if optmizer = SGD
             #   optim_args = {"momemtum" : 0.01}
 
-        super(BaseModel, self).fit(
+        super(AutoEncoder, self).fit(
             train_loader=train_loader,
             validation_loader=validation_loader,
             epochs=epochs,
