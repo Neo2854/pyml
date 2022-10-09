@@ -10,8 +10,8 @@ from ..utils.learning_types import SELF_SUPERVISED
 from ..Optimizers.config import *
 
 class VAE(AutoEncoder):
-    def __init__(self) -> None:
-        super(VAE, self).__init__()
+    def __init__(self, device = None) -> None:
+        super(VAE, self).__init__(device=device)
 
     def forward(self, x):
         params = self.encoder(x)
@@ -41,15 +41,3 @@ class VAE(AutoEncoder):
 
         with torch.no_grad():
             return self.decoder(z)
-
-class Beta_VAE(VAE):
-    def __init__(self, beta = 10) -> None:
-        super(Beta_VAE, self).__init__()
-
-        self.beta = beta
-
-    def loss_fn(self, x, y):
-        return self.beta * self.kl() - self.recon_loss(x, y)
-
-    def set_beta(self, beta):
-        self.beta = beta

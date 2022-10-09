@@ -6,8 +6,8 @@ from ..utils.learning_types import SELF_SUPERVISED
 from ..Optimizers.config import *
 
 class AutoEncoder(BaseModel):
-    def __init__(self) -> None:
-        super(AutoEncoder, self).__init__()
+    def __init__(self, device = None) -> None:
+        super(AutoEncoder, self).__init__(device=device)
 
         self.train_loss_v_epoch = None
         self.valid_loss_v_epoch = None

@@ -1,3 +1,4 @@
-from .VAE import VAE, Beta_VAE
+from .VAE import VAE
+from .BetaVAE import BetaVAE
 
 from ..Optimizers.config import *

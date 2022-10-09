@@ -10,8 +10,10 @@ from pyML.utils.learning_types import SELF_SUPERVISED, SUPERVISED
 from ..Optimizers.config import *
 
 class BaseModel(nn.Module):
-    def __init__(self) -> None:
+    def __init__(self, device = None) -> None:
         super(BaseModel, self).__init__()
+
+        self.dev = device
 
         self.train_loss_v_epoch = None
         self.valid_loss_v_epoch = None
@@ -49,6 +51,10 @@ class BaseModel(nn.Module):
             count = 0
             for i, data in enumerate(train_loader):
                 inputs, labels = data
+
+                if self.dev:
+                    inputs = inputs.to(self.dev)
+                    labels = labels.to(self.dev)
 
                 optimizer.zero_grad()
                 outputs = self.forward(inputs)
@@ -91,12 +97,12 @@ class BaseModel(nn.Module):
                 print("\tTrain Loss = {},\tValidation Loss = {}".format(avg_train_loss, avg_valid_loss))
 
                 self.valid_loss_v_epoch[0][epoch] = epoch
-                self.valid_loss_v_epoch[0][epoch] = avg_valid_loss
+                self.valid_loss_v_epoch[1][epoch] = avg_valid_loss
             else:
                 print("\tTrain Loss = {}".format(avg_train_loss))
 
             self.train_loss_v_epoch[0][epoch] = epoch
-            self.train_loss_v_epoch[0][epoch] = avg_train_loss
+            self.train_loss_v_epoch[1][epoch] = avg_train_loss
 
     def predict(self, x):
         with torch.no_grad:
